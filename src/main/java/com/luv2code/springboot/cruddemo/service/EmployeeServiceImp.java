@@ -14,7 +14,7 @@ import com.luv2code.springboot.cruddemo.entity.Employee;
 public class EmployeeServiceImp implements EmployeeService {
 
 	@Autowired
-	@Qualifier(value = "employeeDAOHibernateImp")
+	@Qualifier(value = "employeeDAOJpaImp")
 	private EmployeeDAO employeeDAO;
 	
 	@Override
