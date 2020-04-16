@@ -2,7 +2,11 @@ package com.luv2code.springboot.cruddemo.rest;
 
 import java.util.List;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +28,18 @@ public class EmployeeRESTController {
 	@RequestMapping(path = "/employees", method = RequestMethod.GET)	
 	public List<Employee> getEmployees() {
 		return employeeService.getEmployees();
+	}
+	
+	@RequestMapping(path = "/employees/{id}", method = RequestMethod.GET)	
+	public Employee getEmployees(@PathVariable int id) {
+		return employeeService.getEmployee(id);
+	}
+	
+	@RequestMapping(path = "/employees/", method = RequestMethod.POST)	
+	public Employee saveEmployee(@RequestBody Employee employee) {
+		employee.setId(0);
+		employeeService.saveEmployee(employee);
+		return employee;
 	}
 	
 }
