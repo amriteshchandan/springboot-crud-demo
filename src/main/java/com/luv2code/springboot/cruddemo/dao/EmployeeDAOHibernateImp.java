@@ -3,7 +3,6 @@ package com.luv2code.springboot.cruddemo.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -23,14 +22,34 @@ public class EmployeeDAOHibernateImp implements EmployeeDAO {
 	}
 	
 	@Override
-	@Transactional
 	public List<Employee> getEmployees() {
-		
 		Session session = entityManager.unwrap(Session.class);
 		Query<Employee> query = session.createQuery("from Employee", Employee.class);
 		List<Employee> employees = query.getResultList();
 		return employees;
-		
 	}
+
+	@Override
+	public Employee getEmployee(int id) {
+		Session session = entityManager.unwrap(Session.class);
+		Employee employee = session.get(Employee.class, id);
+		return employee;
+	}
+
+	@Override
+	public void saveEmployee(Employee employee) {
+		Session session = entityManager.unwrap(Session.class);
+		session.saveOrUpdate(employee);
+	}
+
+	@Override
+	public void deleteEmployee(int id) {
+		Session session = entityManager.unwrap(Session.class);
+		Query<Employee> query = session.createQuery("delete from Employee where id:=id", Employee.class);
+		query.setParameter("id", id);
+		query.executeUpdate();
+	}
+
+
 
 }
